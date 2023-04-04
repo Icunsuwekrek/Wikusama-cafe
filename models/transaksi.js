@@ -11,30 +11,30 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-     //mendefinisikan relasi transaksi -> meja
-     //relasi: 1 to 1 (hasOne atau belongsTo)
-     //parent: meja, child: transaksi
+      //mendefinisikan relasi transaksi -> meja
+      //relasi: 1 to 1 (hasOne atau belongsTo)
+      //parent: meja, child: transaksi
       this.belongsTo(models.meja, {//belongsTO : child -> parent
-      foreignkey:  `id_meja`, as:`meja`  
-    }) 
-    //definisi tabel transaksi ke user
-    //relasi: 1 to 1
-    //parent: user, child: transaksi
-    this.belongsTo(models.user,{
-      foreignkey:`id_user`, as:`user`
-    })
-    //mendefinisikan relasi transaksi -> detail_transaksi
-    // 1 to many relasi
-    this.hasMany(models.detail_transaksi,{
-      foreignKey:`id_transaksi`, as:`detail_transaksi`
-    })
+        foreignkey: `id_meja`, as: `meja`
+      })
+      //definisi tabel transaksi ke user
+      //relasi: 1 to 1
+      //parent: user, child: transaksi
+      this.belongsTo(models.user, {
+        foreignkey: `id_user`, as: `user`
+      })
+      //mendefinisikan relasi transaksi -> detail_transaksi
+      // 1 to many relasi
+      this.hasMany(models.detail_transaksi, {
+        foreignKey: `id_transaksi`, as: `detail_transaksi`
+      })
     }
   }
   transaksi.init({
     id_transaksi: {
       primaryKey: true,
       autoIncrement: true,
-      type:DataTypes.INTEGER
+      type: DataTypes.INTEGER
     },
     tgl_transaksi: DataTypes.DATE,
     id_user: DataTypes.INTEGER,
