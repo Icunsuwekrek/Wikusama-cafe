@@ -3,13 +3,14 @@ const app = express()
 
 /**load controller of menu */
 const menuController = require(`../controllers/menu.controller`)
+const {authorization} = require(`../controllers/auth.controller`)
 
 /**create route for add menu*/
-app.post(`/menu`,menuController.addMenu)
-app.get(`/menu`, menuController.getMenu)
-app.post(`/menu/find`, menuController.findMenu)
-app.put(`/menu/:id_menu`,menuController.updateMenu)
-app.delete(`/menu/:id_menu`,menuController.deleteMenu)
+app.post(`/menu`, authorization(["admin","kasir", "manajer"]) ,menuController.addMenu)
+app.get(`/menu`, authorization(["admin","kasir", "manajer"]) , menuController.getMenu)
+app.post(`/menu/find`, authorization(["admin","kasir", "manajer"]) , menuController.findMenu)
+app.put(`/menu/:id_menu`, authorization(["admin","kasir", "manajer"]) ,menuController.updateMenu)
+app.delete(`/menu/:id_menu`, authorization(["admin","kasir", "manajer"]) ,menuController.deleteMenu)
 
 /**export app */
 module.exports = app

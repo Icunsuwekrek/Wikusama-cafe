@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       //relasi: 1 to 1 (hasOne atau belongsTo)
       //parent: meja, child: transaksi
       this.belongsTo(models.meja, {//belongsTO : child -> parent
-        foreignkey: `id_meja`, as: `meja`
+        foreignKey: `id_meja`, as: `meja`
       })
       //definisi tabel transaksi ke user
       //relasi: 1 to 1
       //parent: user, child: transaksi
       this.belongsTo(models.user, {
-        foreignkey: `id_user`, as: `user`
+        foreignKey: `id_user`, as: `user`
       })
       //mendefinisikan relasi transaksi -> detail_transaksi
       // 1 to many relasi

@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     id_detail_transaksi: {
       primaryKey: true,
       autoIncrement: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER 
     },
     id_transaksi: DataTypes.INTEGER,
     id_menu: DataTypes.INTEGER,
