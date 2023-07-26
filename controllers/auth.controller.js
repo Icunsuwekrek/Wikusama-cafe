@@ -46,6 +46,7 @@ exports.authentication = async (request, response) =>{
 
             /**give a response */
             return response.json({
+                logged: true,
                 status: true,
                 token: token,
                 message: 'login berhasil',

@@ -65,7 +65,7 @@ exports.updateTransaksi = async (request, response) => {
 
         /**prepare data updated transaksi */
         let dataTransaksi = {
-            tgl_transaksi: request, body, tgl_transaksi,
+            tgl_transaksi: request.body.tgl_transaksi,
             id_user: request.body.id_user,
             id_meja: request.body.id_meja,
             nama_pelanggan: request.body.nama_pelanggan,
@@ -101,7 +101,7 @@ exports.updateTransaksi = async (request, response) => {
     } catch (error) {
         return response.json({
             status: false,
-            message: error, message
+            message: error.message
         })
     }
 }
@@ -132,20 +132,20 @@ exports.getTransaksi = async (request, response) => {
     try {
         /**get all data using model */
         let result = await transaksiModel.findAll({
-            include:[
+            include: [
                 "meja",
                 "user",
                 {
                     model: detailModel,
-                    as:"detail_transaksi",
-                    include:["menu"]
+                    as: "detail_transaksi",
+                    include: ["menu"]
                 }
             ]
         })
         /**give a response */
         return response.json({
-            status:true,
-            data:result
+            status: true,
+            data: result
         })
     } catch (error) {
         return response.json({
@@ -153,4 +153,7 @@ exports.getTransaksi = async (request, response) => {
             message: error.message
         })
     }
+}
+exports.findTransaksi = async (request, response) =>{
+    let keyword = request.body.keyword
 }
