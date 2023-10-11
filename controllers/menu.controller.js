@@ -156,7 +156,7 @@ exports.updateMenu = async (request, response) => {
                 let oldFilename = selectedMenu.gambar
                 /**create path of file */
                 let pathFile = path.join(__dirname, `../menu_image`, oldFilename)
-                
+
 
                 /**check the existing old file */
                 if (fs.existsSync(pathFile)) {
@@ -194,39 +194,39 @@ exports.updateMenu = async (request, response) => {
     }
 }
 /**create function to delete menu*/
-exports.deleteMenu = async(request,response) =>{
-try {
-    /**get id that will be delete */
-    let id_menu = request.params.id_menu
-    /**grab menu based on selected id */
-    let selectedMenu = await menuModel
-    .findOne ({where:{id_menu:id_menu}})
+exports.deleteMenu = async (request, response) => {
+    try {
+        /**get id that will be delete */
+        let id_menu = request.params.id_menu
+        /**grab menu based on selected id */
+        let selectedMenu = await menuModel
+            .findOne({ where: { id_menu: id_menu } })
 
-    /**define path of file */
-    let pathFile = path.join(__dirname,`../menu_image`,selectedMenu.gambar)
+        /**define path of file */
+        let pathFile = path.join(__dirname, `../menu_image`, selectedMenu.gambar)
 
-    /**cek existing file */
-    if (fs.existsSync(pathFile)) {
-        /**jika file exist, delete file */
-        fs.unlinkSync(pathFile,error =>{
-            console.log(error);
+        /**cek existing file */
+        if (fs.existsSync(pathFile)) {
+            /**jika file exist, delete file */
+            fs.unlinkSync(pathFile, error => {
+                console.log(error);
+            })
+        }
+
+        /**delete menu using model */
+        await menuModel.destroy({
+            where: { id_menu: id_menu }
+        })
+
+        /**give a response */
+        return response.json({
+            status: true,
+            message: `Data menu telah dihapus`
+        })
+    } catch (error) {
+        return response.json({
+            status: false,
+            message: error.message
         })
     }
-
-    /**delete menu using model */
-    await menuModel.destroy({
-        where:{id_menu:id_menu}
-    })
-
-    /**give a response */
-    return response.json({
-        status:true,
-        message:`Data menu telah dihapus`
-    })
-} catch (error) {
-    return response.json({
-        status:false,
-        message:error.message
-    })
-}
 }

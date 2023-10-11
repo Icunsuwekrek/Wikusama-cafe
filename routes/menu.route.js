@@ -6,7 +6,7 @@ const menuController = require(`../controllers/menu.controller`)
 const {authorization} = require(`../controllers/auth.controller`)
 
 /**create route for add menu*/
-app.post(`/menu`, authorization(["admin","kasir"]) ,menuController.addMenu)
+app.post(`/menu`, authorization(["admin"]) ,menuController.addMenu)
 app.get(`/menu`, authorization(["admin","kasir","manajer"]) , menuController.getMenu)
 app.post(`/menu/find`, authorization(["admin","kasir"]) , menuController.findMenu)
 app.put(`/menu/:id_menu`, authorization(["admin","kasir"]) ,menuController.updateMenu)

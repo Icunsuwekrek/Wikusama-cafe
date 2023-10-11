@@ -20,7 +20,7 @@ const upload = multer({
     fileFilter: (request, file, callback) => {
 
         /**define accepted extension */
-        const extension = [`image/jpg.`, `iamge/png`,`image/jpeg`]
+        const extension = [`image/jpg.`, `iamge/png`, `image/jpeg`]
 
         /**check the extension */
         if (!extension.includes(file.mimetype)) {
@@ -30,17 +30,17 @@ const upload = multer({
         }
         /**filter size limit */
         /**defnie max size */
-        const maxSize = (1*1024*1024)
+        const maxSize = (1 * 1024 * 1024)
         const fileSize = request.headers[`content-lenght`]
         if (fileSize > maxSize) {
             /**refuse upload */
             callback(null, false)
             return callback(null, `File size is over`)
-            
+
         }
         /**accepted upload */
         callback(null, true)
-        
+
     }
 })
 /**export function */

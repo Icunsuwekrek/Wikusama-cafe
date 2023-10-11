@@ -140,7 +140,8 @@ exports.getTransaksi = async (request, response) => {
                     as: "detail_transaksi",
                     include: ["menu"]
                 }
-            ]
+            ],
+            order: [["id_transaksi", "DESC"]],
         })
         /**give a response */
         return response.json({
@@ -162,59 +163,58 @@ exports.findTransaksi = async (request, response) => {
             [Op.or]: [
                 { nama_pelanggan: { [Op.substring]: keyword } },
                 { id_user: { [Op.like]: `%${keyword}%` } }
-
             ]
         }
     })
     return response.json({
         success: true,
         data: transaksi,
-        message: `Data transaksi berhasil di tampilkan`
+        message: `Data transaksi berhasil di tampilkan`     
     })
 }
-exports.findTgl = async(req, res) => {
-    const{tgl_transaksi} = req.params;
+exports.findTgl = async (req, res) => {
+    const { tgl_transaksi } = req.params;
     try {
         const startDate = new Date(tgl_transaksi);
         startDate.setHours(0, 0, 0, 0); // Set start time to 00:00:00
-    
+
         const endDate = new Date(tgl_transaksi);
         endDate.setHours(23, 59, 59, 999); // Set end time to 23:59:59.999
-    
+
         const result = await transaksiModel.findAll({
-          where: {
-            tgl_transaksi: {
-              [Op.between]: [startDate, endDate],
+            where: {
+                tgl_transaksi: {
+                    [Op.between]: [startDate, endDate],
+                },
             },
-          },
-          include: [
-            "meja",
-            "user",
-            {
-              model: detailModel,
-              as: "detail_transaksi",
-              include: ["menu"],
-            },
-          ],
+            include: [
+                "meja",
+                "user",
+                {
+                    model: detailModel,
+                    as: "detail_transaksi",
+                    include: ["menu"],
+                },
+            ],
         });
-    
+
         if (result.length === 0) {
-          res.status(404).json({
-            status: "error",
-            message: "Data tidak ditemukan",
-          });
+            res.status(404).json({
+                status: "error",
+                message: "Data tidak ditemukan",
+            });
         } else {
-          res.status(200).json({
-            status: "success",
-            message: "Data ditemukan",
-            data: result,
-          });
+            res.status(200).json({
+                status: "success",
+                message: "Data ditemukan",
+                data: result,
+            });
         }
-      } catch (error) {
+    } catch (error) {
         res.status(500).json({
-          status: "error",
-          message: error.message,
-        });
-      }
-    
+            status: "error",
+            message: error.message,
+        });
+    }
+
 }
